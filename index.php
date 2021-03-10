@@ -21,7 +21,7 @@
             }
     ?>
 
-    <!-- Blog Entries Column -->
+    <!-- Stories -->
     <div class="col-md-8">
     <h2>Recent Stories</h2>
     <?php
@@ -29,11 +29,11 @@
         $result_count = $conn->query($sql_for_count);
         $count_num = $result_count->num_rows;
         if($count_num < 1) {
-        echo "<h1 class='text-center'>No posts available</h1>";
+        echo "<h1 class='text-center'>No stories available</h1>";
         } else {
         $count  = ceil($count_num /$per_page);
 
-        $sql = "SELECT * FROM post WHERE post_status= 'published' LIMIT $page_1, $per_page";
+        $sql = "SELECT * FROM post WHERE post_status= 'published' ORDER BY post_id DESC LIMIT $page_1, $per_page";
         $result = $conn->query($sql);
 
         if($conn->connect_errno){
@@ -51,11 +51,8 @@
                 $post_content = substr($row['post_content'],0,120);
             
         ?>
-        <!-- <h1 class="page-header">
-        Page Heading
-        <small>Secondary Text</small>
  
-        </h1> -->
+        </h1>
         <h2>
             <a href="story.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
         </h2>
@@ -69,17 +66,15 @@
         </a>
         <hr>
         <p><?php echo $post_content ?></p>
-        <a class="btn btn-primary" href="story.php?p_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+        <a class="btn btn-primary" href="story.php?p_id=<?php echo $post_id; ?>">Read More<span class="glyphicon glyphicon-chevron-right"></span></a>
         <hr>
         <?php  }}
     } ?>
          
     </div>
 
-    <!-- Blog Sidebar Well -->
+    <!-- Sidebar -->
     <?php include("includes/sidebar.php") ?>
-
-
 
 </div>
 
@@ -87,16 +82,10 @@
     <!-- pagination count -->
     <ul class="pager">
     <?php
-        $number_list = array();
         for($i =1; $i <= $count; $i++) {
-        if($i == $page) {
-           echo "<li '><a class='active_link' href='index.php?page={$i}'>{$i}</a></li>";
-        }  else {
             echo "<li '><a href='index.php?page={$i}'>{$i}</a></li>";
         }
-        }
     ?>
-
     </ul>
 
 <?php include("includes/footer.php") ?>

@@ -14,7 +14,7 @@ function EditCat() { // input title data and store to database
    $cat_title= $_POST['cat_title'];
 
    if($cat_title == "" || empty($cat_title)){
-    echo "Field should not be empty!";
+    echo "<span style='color: red'>***Field should not be empty!<span>";
    }
    else{
     $sql = "INSERT INTO categories(cat_title) VALUE('{$cat_title}')";
@@ -37,8 +37,8 @@ function all_catagories(){
      echo "<tr>";
      echo "<td>$cat_id </td>";
      echo "<td>$cat_title</td>";
-     echo "<td><a href='categories.php?delete={$cat_id}'>Delete</td>";
      echo "<td><a href='categories.php?edit={$cat_id}'>Edit</td>";
+     echo "<td><a href='categories.php?delete={$cat_id}'>Delete</td>";
      echo "<tr>";
    }
    } else {
@@ -52,7 +52,7 @@ function delete_catagories(){
   if(isset($_GET['delete'])){
     $cat_title = $_GET['delete'];
     $sql = "DELETE FROM categories where cat_id= '{$cat_title}'";
-    $delete_cat = $conn->query($sql);
+    $conn->query($sql);
     header("location: categories.php");
    }
 }

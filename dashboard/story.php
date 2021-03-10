@@ -1,11 +1,6 @@
 <?php include("includes/admin_header.php") ?>
 
 <div id="wrapper">
-<?php 
-    // if($conn){
-    //     echo "connected";
-    // }
-?>
 
 <!-- Navigation -->
 <?php include("includes/admin_navigation.php") ?>

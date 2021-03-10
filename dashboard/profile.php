@@ -34,7 +34,6 @@
 
 //update
     if(isset($_POST['update_profile'])){
-     $username = $_POST["username"];
      $user_password = $_POST["user_password"];
      $user_firstname = $_POST["user_firstname"];
      $user_lastname = $_POST["user_lastname"];
@@ -48,29 +47,18 @@
 
     move_uploaded_file($user_image_temp, "../images/$user_image");
 
-    // //checking empty image upload error
-    // if(empty($user_image)){
-    //   $check_img = "SELECT * FROM user WHERE user_id = $user_id";
-    //   $select_img = $conn->query($check_img);
+      if(empty($user_image)){
+      $check_img = "SELECT user_image FROM users WHERE user_id = $user_id";
+      $select_img = $conn->query($check_img);
 
-    //   while($row =  $select_img->fetch_assoc()){
-    //     $user_image = $row["user_image"];
-    //   }
-    // }
+      while($row =  $select_img->fetch_assoc()){
+        $user_image = $row["user_image"];
+      }
+    }
 
-    $query = "UPDATE users SET username  = '{$username}', user_password = '{$user_password}', user_firstname   = '{$user_firstname}', user_lastname = '{$user_lastname}', email = '{$email}', mobile = '{$mobile}', gender= '{$gender}',user_image  = '{$user_image}', dob  = '{$dob}' WHERE user_id = {$user_id} ";
+    $user_pass = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 10));
 
-    // $query = "UPDATE post SET ";
-    // $query .="username  = '{$username}', ";
-    // $query .="user_password = '{$user_password}', ";
-    // $query .="user_firstname   = '{$user_firstname}', ";
-    // $query .="user_lastname = '{$user_lastname}', ";
-    // $query .="email = '{$email}', ";
-    // $query .="mobile = '{$mobile}', ";
-    // $query .="gender= '{$gender}', ";
-    // $query .="user_image  = '{$user_image}', ";
-    // $query .="dob  = '{$dob}' ";
-    // $query .= "WHERE user_id = {$edit_user_id} ";
+    $query = "UPDATE users SET user_password = '{$user_pass}', user_firstname   = '{$user_firstname}', user_lastname = '{$user_lastname}', email = '{$email}', mobile = '{$mobile}', gender= '{$gender}',user_image  = '{$user_image}', dob  = '{$dob}' WHERE user_id = {$user_id} ";
 
     $update_user = $conn->query($query);
     if($update_user){
@@ -80,7 +68,7 @@
     <div class="col-xs-6 col-xs-offset-3">
       <div class="alert">
         <span class="closebtn">&times;</span>  
-        <strong>User Updated! <a href="users.php" style="color: black"> <b>Now click here to manage user!!!</b> </a></strong>
+        <strong>Profile Updated! <a href="index.php" style="color: black"> <b>Go to dashboard!!!</b> </a></strong>
       </div>
     </div>
     </div>
@@ -107,23 +95,22 @@
       Update Your Profile
     </h2>
 
-   <form action="" method="post" enctype="multipart/form-data">    
-   <div class="form-group">
-   <label for="username">Username</label>
-   <input type="text" value=<?php echo $username ?> class="form-control" name="username">
-   </div>
-   <div class="form-group">
-   <label for="username">Password</label>
-   <input type="password" value=<?php echo $user_password ?> class="form-control" name="user_password">
-   </div>
-   <div class="form-group">
+   <form action="" method="post" enctype="multipart/form-data"> 
+
+    <div class="form-group">
    <label for="user_firstname">First Name</label>
    <input type="text" value=<?php echo $user_firstname ?> class="form-control" name="user_firstname">
    </div>
    <div class="form-group">
    <label for="user_lastname">Last Name</label>
    <input type="text" value=<?php echo $user_lastname ?> class="form-control" name="user_lastname">
+   </div>   
+   
+   <div class="form-group">
+   <label for="username">Password</label>
+   <input type="password" value=<?php echo $user_password ?> class="form-control" name="user_password">
    </div>
+  
    <div class="form-group">
    <label for="email">Email</label>
    <input type="email" value=<?php echo $email ?> class="form-control" name="email">

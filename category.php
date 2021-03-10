@@ -15,7 +15,7 @@
             if(isset($_GET['category'])){
              $cat_sidebar_id = $_GET['category'];
             }
-            $sql = "SELECT * FROM post WHERE post_category_id= $cat_sidebar_id";
+            $sql = "SELECT * FROM post WHERE post_category_id= $cat_sidebar_id ORDER BY post_id desc";
             $result = $conn->query($sql);
 
             if($conn->connect_errno){

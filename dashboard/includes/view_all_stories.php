@@ -71,6 +71,7 @@
      echo "<td>$post_id </td>";
      echo "<td>$post_author </td>";
      echo "<td>$post_title </td>";
+     
      $sql_cat_show = "SELECT * FROM categories WHERE cat_id = '{$post_category_id}' ";
      $result_cat_show = $conn->query($sql_cat_show);
 

@@ -60,26 +60,16 @@
      echo "<td>$comment_author </td>";
      echo "<td>$comment_content </td>";
 
-     //  $sql_cat_show = "SELECT * FROM categories WHERE cat_id = '{$post_category_id}'";
-     // $result_cat_show = $conn->query($sql_cat_show);
-
-     // while($row = $result_cat_show->fetch_assoc()){  
-     // $cat_id_tm = $row["cat_id"];
-     // $cat_title_tm = $row["cat_title"];
-
-     // echo "<td>{$cat_title_tm} </td>";
-     // }
-   
      echo "<td>$comment_status </td>";
 
-      $query = "SELECT * FROM post WHERE post_id = $comment_post_id ";
+      $query = "SELECT post_id,post_title FROM post WHERE post_id = $comment_post_id ";
       $select_post_id_query = $conn->query($query) or die($conn->error);
 
       while($row_select_post_id = $select_post_id_query->fetch_assoc()){
       $post_id = $row_select_post_id['post_id'];
       $post_title = $row_select_post_id['post_title'];
           
-      echo "<td><a href='../post.php?p_id=$post_id'>$post_title</a></td>";
+      echo "<td><a href='../story.php?p_id=$post_id'>$post_title</a></td>";
       }
      echo "<td>$comment_date </td>";
 

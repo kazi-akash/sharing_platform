@@ -36,7 +36,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
       $same_uname = true;
     }
  }
-  if($same_uname == true && $orow){
+  if($same_uname == true){
     
      ?>
     <div class="container">
@@ -54,7 +54,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
 
 
  
-  if(!($usernameErr && $user_passwordErr && $user_firstnameErr && $user_lastnameErr && $emailErr && $mobileErr && $genderErr && $dobErr) && ($same_uname == false)){
+  if(!empty($username && $user_password && $user_firstname && $user_lastname && $email && $mobile && $dob) && ($same_uname == false)){
   $query_ok = "INSERT INTO users (username, user_password, user_firstname,user_lastname,email, mobile, gender,user_image, dob, user_role) VALUES('{$username}','{$user_password}','{$user_firstname}','{$user_lastname}','{$email}', '{$mobile}','{$gender}', '{$user_image}', '{$dob}', '{$user_role}')"; 
 
      $create_user_query = $conn->query($query_ok); 
@@ -71,6 +71,16 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
     </div>
     </div>
     <?php
+     $username ="";
+    $user_password = "";
+    $user_firstname = "";
+    $user_lastname = "";
+    $email = "";
+    $mobile = "";
+    $gender = "";
+    $user_image = "";
+    $dob = "";
+    $user_role = "";
   }}}
 ?>
 
@@ -89,32 +99,32 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
     <div class="form-group">
    <label for="username">Username</label>
     <?php echo $usernameErr ?>
-   <input type="text" class="form-control" name="username">
+   <input type="text" class="form-control" name="username" value="<?php echo $username;?>" placeholder="Your username...">
    </div>
    <div class="form-group">
    <label for="user_password">Password</label>
    <?php echo $user_passwordErr ?>
-   <input type="password" class="form-control" name="user_password">
+   <input type="password" class="form-control" name="user_password" placeholder="Your password...">
    </div>
    <div class="form-group">
    <label for="user_firstname">First Name</label>
    <?php echo $user_firstnameErr ?>
-   <input type="text" class="form-control" name="user_firstname">
+   <input type="text" class="form-control" name="user_firstname" value="<?php echo $user_firstname;?>" placeholder="Your firstname...">
    </div>
    <div class="form-group">
    <label for="user_lastname">Last Name</label>
      <?php echo $user_lastnameErr ?>
-   <input type="text" class="form-control" name="user_lastname">
+   <input type="text" class="form-control" name="user_lastname" value="<?php echo $user_lastname;?>" placeholder="Your lastname...">
    </div>
    <div class="form-group">
    <label for="email">Email</label>
       <?php echo $emailErr ?>
-   <input type="email" class="form-control" name="email">
+   <input type="email" class="form-control" name="email" value="<?php echo $email;?>" placeholder="Your email...">
    </div>
    <div class="form-group">
    <label for="mobile">Mobile</label>
    <?php echo $mobileErr ?>
-   <input type="text" class="form-control" name="mobile">
+   <input type="number" class="form-control" name="mobile" value="<?php echo $mobile;?>" placeholder="Your mobile...">
    </div>
   
   <div class="form-group">
@@ -136,28 +146,18 @@ if (($_SERVER["REQUEST_METHOD"] == "POST")) {
    <div class="form-group">
    <label for="dob">DOB</label>
     <?php echo $dobErr ?>
-   <input type="date" class="form-control" name="dob">
+   <input type="date" class="form-control" name="dob" value="<?php echo $dob;?>">
    </div>
-
-   <!-- <div class="form-group">
-   <label for="user_role">User Role</label> <br>
-    <select name="user_role" id="">
-      <option value="admin">Admin</option>
-      <option value="user">User</option>
-    </select>
- </div> -->
     
    <div class="form-group">
-    <input class="btn btn-primary" type="submit" name="create_user" value="Add User">
+    <input class="btn btn-primary" type="submit" name="create_user" value="Create new account">
   </div>
 
-<!-- <input type="submit" name="create_user" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
-</form> -->
 
 </div>
-</div> <!-- /.col-xs-12 -->
-</div> <!-- /.row -->
-</div> <!-- /.container -->
+</div> 
+</div> 
+</div> 
 </section>
 
 </div>

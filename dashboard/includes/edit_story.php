@@ -43,6 +43,8 @@
       }
     }
 
+    include("validations/editStory_v.php");
+
     if(!empty($post_title && $post_category_id && $post_tags && $post_content && $post_date)){
     $query = "UPDATE post SET ";
     $query .="post_title  = '{$post_title}', ";
@@ -69,7 +71,22 @@
     </div>
     </div>
     <?php
-  }}
+  }
+else {
+   ?>
+    <div class="container">
+    <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="alert">
+        <span class="closebtn">&times;</span>  
+        <strong> Field can't be empty!!!</strong>
+      </div>
+    </div>
+    </div>
+    </div>
+    <?php
+}
+}
   else{
     // echo "error: ". $conn->error;
   }

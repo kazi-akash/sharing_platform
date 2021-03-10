@@ -10,17 +10,18 @@
 
 <!-- Blog Entries Column -->
 <div class="col-md-8">
-<h1>Selected story</h1>
+<h3>Story Details</h3>
+<hr>
 <!-- First Blog Post -->
 <?php
 if(isset($_GET['p_id'])){
-$each_post_id = $_GET['p_id'];
-}
-$sql_each_post = "SELECT * FROM post WHERE post_id = $each_post_id";
-$result = $conn->query($sql_each_post);
+    $each_post_id = $_GET['p_id'];
+    }
+    $sql_each_post = "SELECT * FROM post WHERE post_id = $each_post_id";
+    $result = $conn->query($sql_each_post);
 
 if($conn->connect_errno){
-die("connection failed!<br>".$conn->connect_errno);
+    die("connection failed!<br>".$conn->connect_errno);
 }
 else{
 if($result->num_rows > 0){
@@ -31,12 +32,9 @@ while($row = $result->fetch_assoc()){
     $post_date = $row['post_date'];
     $post_image = $row['post_image'];
     $post_content = $row['post_content'];
+    $post_tags = $row['post_tags'];
 
 ?>
-    <!-- <h1 class="page-header">
-    Page Heading
-    <small>Secondary Text</small>
-    </h1> -->
     <h2>
     <a href="#"><?php echo $post_title; ?></a>
     </h2>
@@ -48,11 +46,11 @@ while($row = $result->fetch_assoc()){
     <img class="img-responsive" src="images/<?php echo $post_image; ?>" height="150" width="300" alt="">
     <hr>
     <p><?php echo $post_content ?></p>
-    <!-- <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a> -->
+    <p class="lead">Tags: <?php echo $post_tags; ?> </p>
     <hr>
 <?php  } }}  ?>
 
-<!-- Blog Comments -->
+<!-- Story Comments -->
 <?php
 
     if(isset($_SESSION['username'])){
@@ -65,9 +63,8 @@ while($row = $result->fetch_assoc()){
     
         $comment_content = $_POST['comment_content'];
         
-
         if (empty($comment_content)) {
-        $comment_contentErr = "***Plase type your comment before submiting!";
+        $comment_contentErr = "<span style='color:red'>***Plase type your comment before submiting!</span>";
         } else {
         $comment_content = $comment_content;
         }
@@ -90,7 +87,7 @@ while($row = $result->fetch_assoc()){
                 <div class="col-xs-6 col-xs-offset-3">
                 <div class="alert">
                 <span class="closebtn">&times;</span>  
-                <strong><a href="story.php" style= "color: black"> Comment submited! wait for admin approval </a></strong>
+                <strong><br>Comment submited!<span style= "color: black"> wait for admin approval... </span><br></strong>
                 </div>
                 </div>
             </div>
@@ -109,14 +106,6 @@ while($row = $result->fetch_assoc()){
 <div class="well">
 <h4>Leave a Comment:</h4>
 <form role="form" action="" method="post">
-<!-- <div class="form-group">
-    <label for="Author">Author</label>
-    <input type="text" class="form-control" name="comment_author">
-</div>
-<div class="form-group">
-    <label for="Email">Email</label>
-    <input type="email" class="form-control" name="comment_email" required>
-</div> -->
 
 <div class="form-group">
     <label for="Email">Your Comment</label>
@@ -182,6 +171,5 @@ while($row = $result->fetch_assoc()){
 </div>
 <!-- /.row -->
 
-<hr>
 
 <?php include("includes/footer.php") ?>

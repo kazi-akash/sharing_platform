@@ -21,9 +21,9 @@
   } else {
     $post_tags = test_input($post_tags);
     // check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z-' ]*$/",$post_tags)) {
-      $post_tagsErr = "<span style='color: red'><b> ***Only letters and white space allowed!</b></span>";
-    }
+    // if (!preg_match("/^[a-zA-Z-' ]*$/",$post_tags)) {
+    //   $post_tagsErr = "<span style='color: red'><b> ***Only letters and white space allowed!</b></span>";
+    // }
   }
 
     if (empty($post_content)) {

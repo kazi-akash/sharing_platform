@@ -4,7 +4,7 @@
       $surole = $_SESSION['user_role'];
 
       ?>
-<h2 class="page-header"> Manage Comments
+<h2 class="page-header"> Manage own Comments
 <?php
  if($surole == 'admin'){
  ?>

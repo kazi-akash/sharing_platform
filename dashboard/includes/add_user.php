@@ -16,14 +16,14 @@ if(isset($_POST['create_user'])) {
   $dob = ($_POST['dob']);
   $user_role = ($_POST['user_role']);
 
-   $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 10));    
+   $user_password = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 10)); 
 
   // $query_ok = "INSERT INTO users (username, user_password) VALUES('{$username}','{$user_password}')"; 
   move_uploaded_file($post_image_temp, "../images/$user_image");
 
     include("validations/userValidation.php");
 
-  $check_user = "SELECT* FROM users";
+  $check_user = "SELECT username FROM users";
   $c_user = $conn->query($check_user);
   $db_users = "";
   $same_uname = false;
@@ -55,7 +55,7 @@ if(isset($_POST['create_user'])) {
     
   $create_user_query = $conn->query($query_ok); 
   
-  if($create_user_query){
+  if($create_user_query  && $create_user_query){
    ?>
     <div class="container">
     <div class="row">
@@ -68,6 +68,16 @@ if(isset($_POST['create_user'])) {
     </div>
     </div>
     <?php
+     $username ="";
+    $user_password = "";
+    $user_firstname = "";
+    $user_lastname = "";
+    $email = "";
+    $mobile = "";
+    $gender = "";
+    $user_image = "";
+    $dob = "";
+    $user_role = "";
   } else {
     echo "error: ". $conn->error;
   }
@@ -89,7 +99,7 @@ if(isset($_POST['create_user'])) {
    <div class="form-group">
    <label for="username">Username</label>
    <?php echo $usernameErr ?>
-   <input type="text" class="form-control" name="username">
+   <input type="text" class="form-control" name="username"  value="<?php echo $username;?>">
    </div>
    <div class="form-group">
    <label for="user_password">Password</label>
@@ -99,22 +109,22 @@ if(isset($_POST['create_user'])) {
    <div class="form-group">
    <label for="user_firstname">First Name</label>
     <?php echo $user_firstnameErr ?>
-   <input type="text" class="form-control" name="user_firstname">
+   <input type="text" class="form-control" name="user_firstname"  value="<?php echo $user_firstname;?>">
    </div>
    <div class="form-group">
    <label for="user_lastname">Last Name</label>
         <?php echo $user_lastnameErr ?>
-   <input type="text" class="form-control" name="user_lastname">
+   <input type="text" class="form-control" name="user_lastname" value="<?php echo $user_lastname;?>">
    </div>
    <div class="form-group">
    <label for="email">Email</label>
       <?php echo $emailErr ?>
-   <input type="email" class="form-control" name="email">
+   <input type="email" class="form-control" name="email"  value="<?php echo $email;?>">
    </div>
    <div class="form-group">
    <label for="mobile">Mobile</label>
     <?php echo $mobileErr ?>
-   <input type="text" class="form-control" name="mobile">
+   <input type="number" class="form-control" name="mobile"  value="<?php echo $mobile;?>">
    </div>
   
   <div class="form-group">
@@ -135,7 +145,7 @@ if(isset($_POST['create_user'])) {
    <div class="form-group">
    <label for="dob">DOB</label>
    <?php echo $dobErr ?>
-   <input type="date" class="form-control" name="dob">
+   <input type="date" class="form-control" name="dob"  value="<?php echo $dob;?>">
    </div>
 
    <div class="form-group">

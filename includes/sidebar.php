@@ -3,23 +3,6 @@
 
 <!-- Blog Search Well -->
 <div class="col-md-4">
-<?php 
-  // if(isset($_POST['submit']))
-  // {
-  //   $search= $_POST['search'];
-  //   $sql = "SELECT * FROM post WHERE post_tags LIKE '%$search%'";
-  //   $result = $conn->query($sql);
-    
-  //   if($conn->connect_errno){
-  //   die("connection failed!<br>".$conn->connect_errno);
-  //   }
-  //   else{
-  //   if($result->num_rows > 0){
-  //     echo "found!";
-  //   } else {
-  //     echo "" . $conn->error;
-  //   }}}
-?>
 
 <div class="well">
 <h4>Blog Search</h4>

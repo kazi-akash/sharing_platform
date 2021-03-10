@@ -39,7 +39,8 @@
     </div>
     </div>
     <h2>
-    <h1>Searched stories</h1>
+    <h2>Searched Stories</h2>
+    <hr>
       <?php
       
       while($row = $result->fetch_assoc()){
@@ -52,8 +53,8 @@
         $post_content = substr($row['post_content'],0,120);
        
     ?>
-  
-        <a href="story.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+
+    <H2><a href="story.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a></H2> 
     </h2>
     <p class="lead">
         by <a href="index.php"><?php echo $post_author; ?></a>

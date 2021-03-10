@@ -30,11 +30,7 @@
 
   $result_add_post = $conn->query($query);
   if($result_add_post){
-   echo "";
-  } else {
-   confirm($result_add_post);
-  }
-  ?>
+   ?>
     <div class="container">
     <div class="row">
     <div class="col-xs-6 col-xs-offset-3">
@@ -46,6 +42,15 @@
     </div>
     </div>
     <?php
+    $post_title = "";
+    $post_image = "";
+    $post_tags = "";
+    // $post_comment_count = 4;
+    $post_content = "";
+  } else {
+   confirm($result_add_post);
+  }
+  
   }
  }
 ?>
@@ -63,7 +68,7 @@
   <div class="form-group">
     <label for="title">Story Title</label>
     <?php echo $post_titleErr ?>
-    <input type="text" class="form-control" name="post_title">
+    <input type="text" class="form-control" name="post_title" value="<?php echo $post_title;?>" placeholder="Your story Title...">
   </div>
 
   <div class="form-group">
@@ -94,13 +99,13 @@
   <div class="form-group">
    <label for="post_tags">Story Tags</label>
    <?php echo $post_tagsErr ?>
-   <input type="text" class="form-control" name="post_tags">
+   <input type="text" class="form-control" name="post_tags" value="<?php echo $post_tags;?>" placeholder="Yout story tags...">
   </div>
   
   <div class="form-group">
    <label for="post_content">Story Content</label>
    <?php echo $post_contentErr ?>
-   <textarea  class="form-control "name="post_content" id="" cols="30" rows="10"></textarea>
+   <textarea  class="form-control "name="post_content" id="" cols="30" rows="10" value="<?php echo $post_content;?>" placeholder="Your story content..."><?php echo $post_content;?></textarea>
   </div>
 
    <div class="form-group">

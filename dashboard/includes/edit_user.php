@@ -1,5 +1,6 @@
 <?php
 $usernameErr = $user_passwordErr = $user_firstnameErr = $user_lastnameErr = $emailErr = $mobileErr = $genderErr = $dobErr = "";
+
 $username = $user_password = $user_firstname = $user_lastname = $email = $mobile = $gender =  $dob = "";
 
  if(isset($_GET['edit_user'])){
@@ -27,7 +28,6 @@ $username = $user_password = $user_firstname = $user_lastname = $email = $mobile
 
     //update
     if(isset($_POST['edit_user'])){
-     $username = $_POST["username"];
      $user_password = $_POST["user_password"];
      $user_firstname = $_POST["user_firstname"];
      $user_lastname = $_POST["user_lastname"];
@@ -39,24 +39,34 @@ $username = $user_password = $user_firstname = $user_lastname = $email = $mobile
      $dob = $_POST["dob"];
      $user_role = $_POST["user_role"];
 
-    move_uploaded_file($user_image_temp, "../images/$user_image");
+     move_uploaded_file($user_image_temp, "../images/$user_image");
 
-     include("validations/userValidation.php");
+       if(empty($user_image)){
+      $check_img = "SELECT user_image FROM users WHERE user_id = $user_id";
+      $select_img = $conn->query($check_img);
 
-    if(!empty($username && $user_password && $user_firstname && $user_lastname && $email && $mobile && $dob)){
-    $query = "UPDATE users SET username  = '{$username}', user_password = '{$user_password}', user_firstname   = '{$user_firstname}', user_lastname = '{$user_lastname}', email = '{$email}', mobile = '{$mobile}', gender= '{$gender}',user_image  = '{$user_image}', dob  = '{$dob}' WHERE user_id = {$user_id} ";
+      while($row =  $select_img->fetch_assoc()){
+        $user_image = $row["user_image"];
+      }
+    }
 
-    // $query = "UPDATE post SET ";
-    // $query .="username  = '{$username}', ";
-    // $query .="user_password = '{$user_password}', ";
-    // $query .="user_firstname   = '{$user_firstname}', ";
-    // $query .="user_lastname = '{$user_lastname}', ";
-    // $query .="email = '{$email}', ";
-    // $query .="mobile = '{$mobile}', ";
-    // $query .="gender= '{$gender}', ";
-    // $query .="user_image  = '{$user_image}', ";
-    // $query .="dob  = '{$dob}' ";
-    // $query .= "WHERE user_id = {$edit_user_id} ";
+     include("validations/editUserValidation.php");
+
+      $check_user = "SELECT username FROM users";
+      $c_user = $conn->query($check_user);
+      $db_users = "";
+      $same_uname = false;
+
+      while($orow = $c_user->fetch_assoc()){  
+        $db_users = $orow["username"];
+        if($db_users == $username){
+          $same_uname = true;
+        }
+      }
+
+    if(!empty($user_password && $user_firstname && $user_lastname && $email && $mobile && $dob)){
+      $user_pass = password_hash($user_password, PASSWORD_BCRYPT, array('cost' => 10)); 
+    $query = "UPDATE users SET user_password = '{$user_pass}', user_firstname   = '{$user_firstname}', user_lastname = '{$user_lastname}', email = '{$email}', mobile = '{$mobile}', gender= '{$gender}',user_image  = '{$user_image}', dob  = '{$dob}' WHERE user_id = {$user_id} ";
 
     $update_user = $conn->query($query);
     if($update_user){
@@ -76,8 +86,21 @@ $username = $user_password = $user_firstname = $user_lastname = $email = $mobile
     else {
      echo "error: ". $conn->error;
     }}
+    else {
+      ?>
+    <div class="container">
+    <div class="row">
+    <div class="col-xs-6 col-xs-offset-3">
+      <div class="alert">
+        <span class="closebtn">&times;</span>  
+        <strong><b>Field can't be empty!!!</b> </a></strong>
+      </div>
+    </div>
+    </div>
+    </div>
+    <?php
+    }}
     // confirm($update_post);
-  }
   else{
     // echo "error: ". $conn->error;
   }
@@ -91,15 +114,8 @@ $username = $user_password = $user_firstname = $user_lastname = $email = $mobile
 <h2 class="page-header">
  Update user
 </h2>
-<form action="" method="post" enctype="multipart/form-data">    
-   <div class="form-group">
-   <label for="username">Username</label>
-   <input type="text" value=<?php echo $username ?> class="form-control" name="username">
-   </div>
-   <div class="form-group">
-   <label for="username">Password</label>
-   <input type="password" value=<?php echo $user_password ?> class="form-control" name="user_password">
-   </div>
+<form action="" method="post" enctype="multipart/form-data"> 
+
    <div class="form-group">
    <label for="user_firstname">First Name</label>
    <input type="text" value=<?php echo $user_firstname ?> class="form-control" name="user_firstname">
@@ -108,6 +124,12 @@ $username = $user_password = $user_firstname = $user_lastname = $email = $mobile
    <label for="user_lastname">Last Name</label>
    <input type="text" value=<?php echo $user_lastname ?> class="form-control" name="user_lastname">
    </div>
+
+   <div class="form-group">
+   <label for="username">Password</label>
+   <input type="password" value=<?php echo $user_password ?> class="form-control" name="user_password">
+   </div>
+  
    <div class="form-group">
    <label for="email">Email</label>
    <input type="email" value=<?php echo $email ?> class="form-control" name="email">
@@ -139,7 +161,7 @@ $username = $user_password = $user_firstname = $user_lastname = $email = $mobile
    <input value=<?php echo $dob ?> type="date" class="form-control" name="dob">
    </div>
 
-   <div class="form-group">
+    <div class="form-group">
    <img width="100" src="../images/<?php echo $user_image ?>"  alt="">
    <input type="file"  name="image">
   </div>
